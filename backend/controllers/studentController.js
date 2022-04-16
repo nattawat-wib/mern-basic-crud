@@ -8,11 +8,8 @@ exports.get_all_student = async (req, res) => {
 }
 
 exports.get_student = async (req, res) => {
-    console.log("get_student");
     const student = await Student.find({ email: req.params.email });
     if(!student.length) error_res(res, 404, "student with this email is not exist");
-    
-    console.log(student);
     
     success_res(res, 200, student)
 }
@@ -47,5 +44,6 @@ exports.edit_student = async (req, res) => {
     if(!exits_student.length) return error_res(res, 404, "student with this email is not exist");    
 
     const student = await Student.findOneAndUpdate({ email: req.params.email }, req.body, { new: true });
+    
     success_res(res, 200, student)
 }

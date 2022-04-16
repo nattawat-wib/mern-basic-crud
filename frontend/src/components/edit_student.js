@@ -17,17 +17,14 @@ const EditStudent = () => {
         })
     }, [])
 
-    console.log(user);
-
     const change_form = e => {
-        update_user({ [e.target.name]: e.target.value }) 
+        update_user(prev_form => ({ ...prev_form, [e.target.name]: e.target.value }))
     }
 
     const submit_form = e => {
         e.preventDefault();
         axios.patch(`http://localhost:8080/api/student/${email}`, user).then(resp =>{
-
-            if(resp.data.status) console.log("success"); window.location.href = "/student-list"
+            if(resp.data.status) window.location.href = "/student-list"
         })
     }
 
