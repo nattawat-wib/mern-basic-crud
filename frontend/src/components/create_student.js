@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import axios from "axios";
 
 const CreateStudent = () => {
     const [ form, update_form ] = useState({});
@@ -7,8 +8,6 @@ const CreateStudent = () => {
     const change_form = e => {        
         
         update_form(prev_form => {
-            console.log(prev_form);
-            console.log(e.target.value);
             prev_form[e.target.name] = e.target.value
             return prev_form
         })
@@ -17,11 +16,19 @@ const CreateStudent = () => {
     const submit_form = e => {
         e.preventDefault();
         console.log(form);
-        update_form({
-            name: "",
-            email: "",
-            roll_no: ""
+
+        axios.post("http://localhost:8080/api/student", form).then(resp => {
+            console.log("resp", resp);
+
+            if(resp.data.status) {
+                update_form({
+                    name: "",
+                    email: "",
+                    roll_no: ""
+                })
+            }
         })
+
     }
 
     return (
